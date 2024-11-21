@@ -1,11 +1,14 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
 
 const Navbar = () => {
+    const [navOpen, setNavOpen] = useState(false);
+    
     const navItems = [
         {
             label: "Home",
@@ -34,7 +37,7 @@ const Navbar = () => {
                 className='w-10 h-10 rounded-full z-50'
             />
 
-            <div className='flex items-center gap-10 max-lg:flex-col max-lg:h-dvh max-lg:fixed max-lg:top-0 max-lg:right-0 max-lg:justify-center max-lg:w-full max-lg:bg-gray-800'>
+            <div className={`flex items-center gap-10 max-lg:flex-col max-lg:h-dvh max-lg:fixed max-lg:top-0 max-lg:right-0 max-lg:justify-center max-lg:w-full max-lg:bg-gray-800 ${!navOpen ? "max-lg:translate-x-full" : ""}`}>
                 {
                     navItems.map((item, index) => (
                         <Link key={index} href={item.link} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150'>{item.label}</Link>
@@ -49,8 +52,10 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            <button className='text-3xl lg:hidden z-50'>
-                <IoMenuOutline />
+            <button onClick={()=>{setNavOpen(!navOpen)}} className='text-3xl lg:hidden z-50'>
+                {
+                    navOpen ? <IoMdClose/> : <IoMenuOutline />
+                }
             </button>
         </main>
     )
