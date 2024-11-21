@@ -29,19 +29,19 @@ const Navbar = () => {
             alt='logo'
             width={500}
             height={500}
-            className='w-8 h-8 rounded-full bg-white'
+            className='w-10 h-10 rounded-full'
         />
 
-        <div>
+        <div className='flex items-center gap-10'>
             {
                 navItems.map((item, index)=>(
-                    <Link key={index} href={item.link} className='text-lg hover:underline hover:underline-offset-1 duration-150'>{item.label}</Link>
+                    <Link key={index} href={item.link} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150'>{item.label}</Link>
                 ))
             }
         </div>
 
         <div>
-            <Link href={'#'}>Sign In</Link>
+            <Link href={'#'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150'>Sign In</Link>
         </div>
     </main>
   )
