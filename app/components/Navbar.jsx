@@ -28,7 +28,7 @@ const Navbar = () => {
         },
     ]
     return (
-        <main className='bg-gray-800 text-white p-3 flex items-center justify-between'>
+        <main className='bg-gray-800 text-white p-3 flex items-center justify-between sticky top-0'>
             <Image
                 src={'/logo.png'}
                 alt='logo'

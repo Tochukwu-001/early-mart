@@ -5,7 +5,7 @@ const Footer = () => {
     <main>
       <section className="p-[2rem] bg-gray-800 text-white flex flex-col gap-8 max-lg:px-5">
 
-        <h3 class="font-black lg:text-4xl text-3xl text-center">
+        <h3 className="font-black lg:text-4xl text-3xl text-center">
           Early Mart
         </h3>
 
