@@ -46,7 +46,7 @@ const Navbar = () => {
             </div>
 
             <div>
-                <Link href={'#'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150 flex items-center gap-3'>
+                <Link href={'/auth/signin'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150 flex items-center gap-3'>
                     <FaRegUser />
                     Sign In
                 </Link>
