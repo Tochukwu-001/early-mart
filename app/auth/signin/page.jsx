@@ -1,5 +1,6 @@
 'use client';
 import GithubSignin from "@/app/components/GithubSignin";
+import GoogleSignin from "@/app/components/GoogleSignin";
 import Link from "next/link";
 import { FaGoogle } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -11,12 +12,7 @@ const SignInPage = () => {
             <div className="text-center p-6 max-w-sm w-full bg-white shadow-lg rounded-lg">
                 <h1 className="text-4xl font-bold mb-4">Sign in to Your Account</h1>
                 <div className="space-y-4">
-                    <button
-                        className="w-full py-3 px-6 bg-red-600 text-white rounded-md flex items-center justify-center space-x-3 hover:bg-red-700 transition-all"
-                    >
-                        <FaGoogle className="text-2xl"/>
-                        <span>Sign in with Google</span>
-                    </button>
+                   <GoogleSignin/>
 
                    <GithubSignin/>
 

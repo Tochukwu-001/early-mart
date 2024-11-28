@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Early-Mart",
+  title: "Early-Mart | Shopping made easy",
   description: "Bringing products and services to your doorstep",
 };
 
