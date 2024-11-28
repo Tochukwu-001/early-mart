@@ -5,10 +5,21 @@ import React, { useState } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
+import { useSession } from 'next-auth/react';
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false);
-    
+
+    // session object created for authenticated users
+    const { data: session } = useSession();
+    console.log(session?.user?.name);
+
+
     const navItems = [
         {
             label: "Home",
@@ -27,6 +38,7 @@ const Navbar = () => {
             link: '#'
         },
     ]
+
     return (
         <main className='bg-gray-800 text-white p-3 flex items-center justify-between sticky top-0'>
             <Image
@@ -46,15 +58,24 @@ const Navbar = () => {
             </div>
 
             <div>
-                <Link href={'/auth/signin'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150 flex items-center gap-3'>
-                    <FaRegUser />
-                    Sign In
-                </Link>
+                {
+                    // alternate display for signed in users
+                    session ? <Avatar>
+                        <AvatarImage src={session?.user?.image} alt={session?.user?.name.slice(0,2)} />
+                        <AvatarFallback>{session?.user?.name.slice(0,2).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                        :
+                        <Link href={'/auth/signin'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150 flex items-center gap-3'>
+                            <FaRegUser />
+                            Sign In
+                        </Link>
+                }
+
             </div>
 
-            <button onClick={()=>{setNavOpen(!navOpen)}} className='text-3xl lg:hidden z-50'>
+            <button onClick={() => { setNavOpen(!navOpen) }} className='text-3xl lg:hidden z-50'>
                 {
-                    navOpen ? <IoMdClose/> : <IoMenuOutline />
+                    navOpen ? <IoMdClose /> : <IoMenuOutline />
                 }
             </button>
         </main>
