@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { IoMenuOutline } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import {
     Avatar,
     AvatarFallback,
@@ -19,7 +19,7 @@ const Navbar = () => {
 
     // session object created for authenticated users
     const { data: session } = useSession();
-    console.log(session?.user?.name);
+    console.log(session);
 
 
     const navItems = [
@@ -101,6 +101,9 @@ const Navbar = () => {
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                     <Link href={'/post-product'}>Sell a Product</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <button onClick={()=>{signOut({callbackUrl: "/auth/signin"})}}>Log Out</button>
                                 </MenuItem>
                             </Menu>
                         </div>
