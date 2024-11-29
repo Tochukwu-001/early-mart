@@ -10,7 +10,9 @@ import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-} from "@/components/ui/avatar"
+} from "@/components/ui/avatar";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false);
@@ -39,6 +41,15 @@ const Navbar = () => {
         },
     ]
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <main className='bg-gray-800 text-white p-3 flex items-center justify-between sticky top-0'>
             <Image
@@ -60,10 +71,39 @@ const Navbar = () => {
             <div>
                 {
                     // alternate display for signed in users
-                    session ? <Avatar>
-                        <AvatarImage src={session?.user?.image} alt={session?.user?.name.slice(0,2)} />
-                        <AvatarFallback>{session?.user?.name.slice(0,2).toUpperCase()}</AvatarFallback>
-                    </Avatar>
+                    session ?
+                        <div>
+                            <Avatar
+                                id="basic-button"
+                                aria-controls={open ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={handleClick}
+                                className="hover:cursor-pointer"
+                            >
+                                <AvatarImage src={session?.user?.image} alt={session?.user?.name.slice(0, 2)} />
+                                <AvatarFallback>{session?.user?.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                            </Avatar>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                            >
+                                <MenuItem onClick={handleClose}>
+                                    <Link href={'/profile'}>Profile</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <Link href={'/products'}>Products</Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    <Link href={'/post-product'}>Sell a Product</Link>
+                                </MenuItem>
+                            </Menu>
+                        </div>
                         :
                         <Link href={'/auth/signin'} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150 flex items-center gap-3'>
                             <FaRegUser />
