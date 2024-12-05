@@ -1,15 +1,51 @@
 "use client";
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import * as Yup from "yup";
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { collection, addDoc } from "firebase/firestore"; 
+import { useSession } from 'next-auth/react';
 
 const page = () => {
 
+  const { data: session } = useSession()
+  const authorMail = session?.user?.email
+
   const initVal = {
-    prodctName: "",
+    productName: "",
     productImage: null,
     productCategory: "",
     productPrice: "",
     productDescription: ""
+  }
+
+  const validationSchema = Yup.object({
+    productName: Yup.string().required("Product name is required"),
+    productCategory: Yup.string().required("Product category is required"),
+    productDescription: Yup.string().required("Product description is required"),
+    productPrice: Yup.number().required("Product price is required").positive("Price must be a positive  number")
+  })
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+
+      // an object to be sent to the db
+      const product = {
+        name: values.productName,
+        category: values.productCategory,
+        price: values.productPrice,
+        description: values.productDescription,
+        timestamp: new Date(),
+        author: session?.user?.name,
+        authorMail: authorMail
+
+      }
+
+      console.log("Form Submitted", values);
+      resetForm()
+    } catch (error) {
+      console.error("Error posting product", error)
+      alert("Post failed")
+    }
   }
 
   return (
@@ -18,6 +54,8 @@ const page = () => {
         <h1 className='text-2xl font-bold text-gray-800 mb-4 text-center'>Post a Product</h1>
         <Formik
           initialValues={initVal}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
           <Form className='space-y-5'>
             {/* product name */}
@@ -29,9 +67,14 @@ const page = () => {
                 name="productName"
                 type="text"
               />
+              <ErrorMessage
+                name='productName'
+                component={"p"}
+                className='text-sm text-red-500 mt-1'
+              />
             </div>
             {/* product image */}
-            <div>
+            {/* <div>
               <label htmlFor="" className='text-sm'>Product Image:</label>
               <Field
                 className="mt-1 w-full p-2 border rounded-md outline-none"
@@ -39,7 +82,12 @@ const page = () => {
                 type="file"
                 accept="image/*"
               />
-            </div>
+              <ErrorMessage
+                name='productImage'
+                component={"p"}
+                className='text-sm text-red-500 mt-1'
+              />
+            </div> */}
             {/* product category */}
             <div>
               <label htmlFor="" className='text-sm'>Product Category:</label>
@@ -48,6 +96,11 @@ const page = () => {
                 placeholder="Enter product category"
                 name="productCategory"
                 type="text"
+              />
+              <ErrorMessage
+                name='productCategory'
+                component={"p"}
+                className='text-sm text-red-500 mt-1'
               />
             </div>
             {/* product price */}
@@ -59,6 +112,11 @@ const page = () => {
                 name="productPrice"
                 type="number"
               />
+              <ErrorMessage
+                name='productPrice'
+                component={"p"}
+                className='text-sm text-red-500 mt-1'
+              />
             </div>
             {/* product description */}
             <div>
@@ -68,6 +126,11 @@ const page = () => {
                 placeholder="Enter product desciption"
                 name="productDescription"
                 type="text"
+              />
+              <ErrorMessage
+                name='productDescription'
+                component={"p"}
+                className='text-sm text-red-500 mt-1'
               />
             </div>
 
