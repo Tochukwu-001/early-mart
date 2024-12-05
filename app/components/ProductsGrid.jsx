@@ -8,28 +8,31 @@ const ProductsGrid = () => {
 
   const products = [
       {
-        category: "Man T-Shirt",
-        price: "$50.00",
+        name: "T-Shirt",
+        category: "Clothing", 
+        price: "50.00",
         image: "/asset4.png"
       },
       {
-        category: "Man T-Shirt",
-        price: "$50.00",
+        name: "T-Shirt",
+        category: "Clothing", 
+        price: "50.00",
         image: "/asset5.png"
       },
       {
-        category: "Man T-Shirt",
-        price: "$50.00",
+        name: "T-Shirt",
+        category: "Clothing", 
+        price: "50.00",
         image: "/asset6.png"
       },
     ]
 
   return (
-    <main className='px-[5rem] grid grid-cols-3 gap-10 my-5'>
+    <main className='lg:px-[5rem] p-3 grid grid-cols-1 lg:grid-cols-3 md:gap-10 gap-5 my-5'>
       {
         products.map((product, i) => (
           <div key={i} className='border flex flex-col gap-5 mt-2 rounded-lg p-3 hover:shadow-lg hover:border-none duration-200'>
-            <h2 className='text-center font-semibold text-2xl'>{product.name}</h2>
+            <h2 className='text-center font-semibold text-2xl text-blue-600'>{product.name}</h2>
             <p className='text-center text-gray-500 text-sm'>{product.category}</p>
             <p className='text-center text-red-500 text-sm'>N{product.price}</p>
             <Image

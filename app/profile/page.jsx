@@ -32,7 +32,7 @@ const page = async () => {
                         redirect("/auth/signin")
                     }}
                 >
-                    <button type="submit">Log Out</button>
+                    <button type="submit" className='bg-gray-800  text-white font-semibold rounded-md px-7 py-2 text-lg upprecase'>Log Out</button>
                 </form>
             </div>
         </main>

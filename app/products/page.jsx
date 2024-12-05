@@ -1,9 +1,17 @@
+"use server";
 import React from 'react'
 import ProductsGrid from '../components/ProductsGrid'
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
-const page = () => {
+const page = async () => {
+  const session = await auth()
+
+  if (!session) {
+    redirect("/auth/signin")
+  }
   return (
-    <main className='h-dvh flex items-center justify-center w-full text-5xl text-blue-600 font-bold uppercase'>
+    <main className='min-h-dvh'>
         <ProductsGrid/>
     </main>
   )

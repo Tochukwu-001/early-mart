@@ -19,7 +19,7 @@ const Navbar = () => {
 
     // session object created for authenticated users
     const { data: session } = useSession();
-    console.log(session);
+    // console.log(session);
 
 
     const navItems = [
@@ -29,7 +29,7 @@ const Navbar = () => {
         },
         {
             label: "About Us",
-            link: '#'
+            link: '/about'
         },
         {
             label: "Contact",
@@ -60,10 +60,16 @@ const Navbar = () => {
                 className='w-10 h-10 rounded-full z-50'
             />
 
-            <div className={`flex items-center gap-10 max-lg:flex-col max-lg:h-dvh max-lg:fixed max-lg:top-0 max-lg:right-0 max-lg:justify-center max-lg:w-full max-lg:bg-gray-800 ${!navOpen ? "max-lg:translate-x-full" : ""}`}>
+            <div className={`flex items-center gap-10 max-lg:flex-col max-lg:h-dvh max-lg:fixed max-lg:top-0 max-lg:right-0 max-lg:justify-center max-lg:w-full max-lg:bg-gray-800 transition-all ${!navOpen ? "max-lg:translate-x-full" : ""}`}>
                 {
                     navItems.map((item, index) => (
-                        <Link key={index} href={item.link} className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150'>{item.label}</Link>
+                        <Link
+                            key={index}
+                            href={item.link}
+                            className='text-lg hover:bg-transparent/30 p-2 rounded-md duration-150'
+                            onClick={()=> setNavOpen(false)}
+                        >
+                            {item.label}</Link>
                     ))
                 }
             </div>
@@ -97,13 +103,13 @@ const Navbar = () => {
                                     <Link href={'/profile'}>Profile</Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
-                                    <Link href={'/products'}>Products</Link>
+                                    <Link href={'/products'}>Shop</Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                     <Link href={'/post-product'}>Sell a Product</Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
-                                    <button onClick={()=>{signOut({callbackUrl: "/auth/signin"})}}>Log Out</button>
+                                    <button onClick={() => { signOut({ callbackUrl: "/auth/signin" }) }}>Log Out</button>
                                 </MenuItem>
                             </Menu>
                         </div>
