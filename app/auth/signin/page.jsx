@@ -1,9 +1,10 @@
-import GithubSignin from "@/app/components/GithubSignin";
 import { auth, signIn } from "@/auth"
 import Link from "next/link";
 import { redirect } from "next/navigation"
 import { FaGoogle } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { FaGithub } from 'react-icons/fa';
+
 
 
 const SignInPage = async () => {
@@ -31,8 +32,18 @@ const SignInPage = async () => {
 
                     </form>
 
-                    <GithubSignin />
+                    <form
+                        className="w-full py-3 px-6 bg-gray-900 text-white rounded-md flex items-center justify-center space-x-3 hover:bg-gray-800 transition-all"
+                        action={async () => {
+                            "use server"
+                            await signIn("github")
+                        }}
+                    >
+                        <FaGithub className="text-2xl" />
+                        <button className="" type="submit">Sign in with Github</button>
 
+                    </form>
+                    
                     <button
                         className="w-full py-3 px-6 bg-blue-400 text-white rounded-md flex items-center justify-center space-x-3 hover:bg-blue-500 transition-all"
                     >
