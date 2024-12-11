@@ -2,8 +2,9 @@
 import React from 'react';
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import { useSession } from 'next-auth/react';
+import { db } from '@/lib/firebaseConfig';
 
 const page = () => {
 
@@ -36,12 +37,16 @@ const page = () => {
         description: values.productDescription,
         timestamp: new Date(),
         author: session?.user?.name,
-        authorMail: authorMail
-
+        authorMail: authorMail,
+        isPaid: false
       }
+
+      const docRef = collection(db, "products")
+      await addDoc(docRef, product)
 
       console.log("Form Submitted", values);
       resetForm()
+      alert("Product posted sucessfully")
     } catch (error) {
       console.error("Error posting product", error)
       alert("Post failed")

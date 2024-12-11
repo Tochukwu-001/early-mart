@@ -1,31 +1,53 @@
 "use client";
+import { db } from '@/lib/firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const ProductsGrid = () => {
 
-  const products = [
-      {
-        name: "T-Shirt",
-        category: "Clothing", 
-        price: "50.00",
-        image: "/asset4.png"
-      },
-      {
-        name: "T-Shirt",
-        category: "Clothing", 
-        price: "50.00",
-        image: "/asset5.png"
-      },
-      {
-        name: "T-Shirt",
-        category: "Clothing", 
-        price: "50.00",
-        image: "/asset6.png"
-      },
-    ]
+  const [products, setproducts] = useState([])
+
+  // const products = [
+  //     {
+  //       name: "T-Shirt",
+  //       category: "Clothing", 
+  //       price: "50.00",
+  //       image: "/asset4.png"
+  //     },
+  //     {
+  //       name: "T-Shirt",
+  //       category: "Clothing", 
+  //       price: "50.00",
+  //       image: "/asset5.png"
+  //     },
+  //     {
+  //       name: "T-Shirt",
+  //       category: "Clothing", 
+  //       price: "50.00",
+  //       image: "/asset6.png"
+  //     },
+  //   ]
+
+  const fetchProducts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"))
+      const productsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      setproducts(productsData)
+    } catch (error) {
+      console.error("Error fetching products: ", error);
+      alert("Error fetching products")
+    }
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
 
   return (
     <main className='lg:px-[5rem] p-3 grid grid-cols-1 lg:grid-cols-3 md:gap-10 gap-5 my-5'>
@@ -42,7 +64,7 @@ const ProductsGrid = () => {
               height={500}
               className='w-[15rem] h-[20rem] mx-auto'
             />
-            <Link href={"#"} className='rounded-lg flex items-center gap-4 p-2 justify-center uppercase w-[9rem] mx-auto bg-red-500 text-white font-semibold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 transition-all text-sm'>
+            <Link href={"/shop/" + product.id} className='rounded-lg flex items-center gap-4 p-2 justify-center uppercase w-[9rem] mx-auto bg-red-500 text-white font-semibold hover:text-red-500 hover:bg-white hover:border hover:border-red-500 transition-all text-sm'>
               <p>Buy now</p>
               <FaArrowRightLong />
             </Link>

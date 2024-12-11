@@ -103,7 +103,7 @@ const Navbar = () => {
                                     <Link href={'/profile'}>Profile</Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
-                                    <Link href={'/products'}>Shop</Link>
+                                    <Link href={'/shop'}>Shop</Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                     <Link href={'/post-product'}>Sell a Product</Link>
