@@ -4,8 +4,10 @@ import { FaCaretDown } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useSession } from 'next-auth/react';
 
 const page = () => {
+  const { data: session } = useSession()
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -68,9 +70,9 @@ const page = () => {
         <div className='w-1/2 mx-auto flex flex-col gap-8 max-lg:w-full'>
           <h1 className='text-4xl text-white font-bold text-center italic'>Early Mart</h1>
           <p className='text-3xl font-semibold text-white text-center'>Shop for your all time favourites. Buy and sell from the comfort of your home.</p>
-          <button className='bg-red-500 text-white font-semibold w-fit mx-auto rounded-md px-5 py-3 text-2xl hover:bg-white hover:text-red-500 hover:scale-105 duration-300'>
+          <a href={ session ? "/shop" : "/auth/signin" } className='bg-red-500 text-white font-semibold w-fit mx-auto rounded-md px-5 py-3 text-2xl hover:bg-white hover:text-red-500 hover:scale-105 duration-300'>
             Shop Now
-          </button>
+          </a>
         </div>
       </div>
     </main>
